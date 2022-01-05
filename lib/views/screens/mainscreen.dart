@@ -61,7 +61,7 @@ class MainScreenState extends State<MainScreen> {
                   Expanded(
                     flex: 4,
                     child: Consumer<PlayersProvider>(
-                      builder: (context, provider, child) => Container(
+                      builder: (context, provider, child) => SizedBox(
                         child: Text(
                           "Scholars(${provider.players.length})",
                           style: Theme.of(context).textTheme.headline6,

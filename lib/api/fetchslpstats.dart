@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:developer';
 
 import 'package:axie_monitoring/models/slp.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http;
 
 const String url = "https://axie-infinity.p.rapidapi.com/";
@@ -16,7 +17,7 @@ class ApiHelper {
       Uri.parse(url + endpoints['slpStats'].toString() + roninId),
       headers: {
         'x-rapidapi-host': 'axie-infinity.p.rapidapi.com',
-        'x-rapidapi-key': '62e9221155mshe5a56cf16a518a4p12886cjsnaf3e3bdddf82'
+        'x-rapidapi-key': env['API_KEY']!,
       },
     );
 
