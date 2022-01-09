@@ -1,7 +1,9 @@
-import 'package:axie_monitoring/providers/playersprovider.dart';
+import 'package:axie_monitoring/providers/userprovider.dart';
 import 'package:axie_monitoring/views/widgets/addplayer.dart';
-import 'package:axie_monitoring/views/widgets/playercards.dart';
-import 'package:axie_monitoring/views/widgets/playertable.dart';
+import 'package:axie_monitoring/views/widgets/landscapewidgets/playertable.dart';
+
+
+import 'package:axie_monitoring/views/widgets/portraitwidgets/playercards.dart';
 import 'package:axie_monitoring/views/widgets/usercard.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -35,10 +37,13 @@ class MainScreenState extends State<MainScreen> {
         elevation: 0,
         title: const Text("Axie Monitoring"),
         actions: <Widget>[
-          IconButton(
-            icon: const Icon(Icons.person),
-            splashRadius: 20,
-            onPressed: () {},
+          Padding(
+            padding: const EdgeInsets.only(right: 10),
+            child: IconButton(
+              icon: const Icon(Icons.person),
+              splashRadius: 20,
+              onPressed: () {},
+            ),
           ),
         ],
       ),

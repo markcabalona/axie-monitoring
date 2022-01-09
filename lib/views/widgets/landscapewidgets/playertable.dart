@@ -1,5 +1,5 @@
 import 'package:axie_monitoring/models/player.dart';
-import 'package:axie_monitoring/providers/playersprovider.dart';
+import 'package:axie_monitoring/providers/userprovider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:intl/intl.dart';

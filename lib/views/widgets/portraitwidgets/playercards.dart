@@ -1,5 +1,6 @@
-import 'package:axie_monitoring/providers/playersprovider.dart';
-import 'package:axie_monitoring/views/widgets/playercard.dart';
+import 'package:axie_monitoring/providers/userprovider.dart';
+import 'package:axie_monitoring/views/widgets/portraitwidgets/playercard.dart';
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 

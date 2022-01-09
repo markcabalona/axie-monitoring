@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:developer';
 
 import 'package:axie_monitoring/models/slp.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
@@ -11,7 +10,7 @@ const Map<String, String> endpoints = {
   //more endpoints
 };
 
-class ApiHelper {
+class AxieApiHelper {
   static Future<SlpStats> fetchSlpStats(String roninId) async {
     final _response = await http.get(
       Uri.parse(url + endpoints['slpStats'].toString() + roninId),
@@ -24,7 +23,6 @@ class ApiHelper {
     if (_response.statusCode == 200) {
       
       Map<String, dynamic> _json = jsonDecode(_response.body);
-      log(_json['slp'].toString());
       return Future(() => SlpStats.fromJson(_json['slp']));
     } else {
       throw Exception('Failed to fetch SLP stats');

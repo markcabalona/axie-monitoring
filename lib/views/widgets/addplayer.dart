@@ -1,6 +1,6 @@
 import 'dart:developer';
 import 'package:axie_monitoring/models/player.dart' as models;
-import 'package:axie_monitoring/providers/playersprovider.dart';
+import 'package:axie_monitoring/providers/userprovider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -44,7 +44,7 @@ class AddPlayer extends StatelessWidget {
                           .addPlayer(
                         models.Player(
                           name: _nameCtrl.text,
-                          percentage: double.parse(_percentageCtrl.text),
+                          percentage: double.parse(_percentageCtrl.text)/100,
                           roninId: _roninAddressCtrl.text.replaceFirst('ronin:', '0x'),
                         ),
                       );
@@ -80,8 +80,8 @@ class AddPlayer extends StatelessWidget {
     if (val != null) {
       try {
         double _percentage = double.parse(val);
-        if (!(_percentage >= 0 && _percentage <= 1)) {
-          return "Percentage must be between 0 and 1.";
+        if (!(_percentage >= 0 && _percentage <= 100)) {
+          return "Percentage must be between 0 and 100.";
         }
         return null;
       } catch (e) {

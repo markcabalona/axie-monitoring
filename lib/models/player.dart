@@ -1,13 +1,14 @@
 import 'package:axie_monitoring/api/fetchslpstats.dart';
+import 'package:axie_monitoring/database/player.dart';
 import 'package:axie_monitoring/models/slp.dart';
 
 class Player {
+  int? id;
+  int? userId;
   String roninId;
   String name;
-  double percentage; //initialize to 100
+  double percentage;
   late SlpStats slp;
-  // Future<LeaderboardStats>? leaderboard;
-  // Future<Adventure>? adventure;
 
   Player({
     required this.roninId,
@@ -15,7 +16,20 @@ class Player {
     required this.percentage,
   });
 
-  void update()async{
-    slp = await ApiHelper.fetchSlpStats(roninId);
+  Map<String, dynamic> toMap() => {
+        PlayerTableFields.roninId: roninId,
+        PlayerTableFields.name: name,
+        PlayerTableFields.percentage: percentage,
+      };
+
+  Player.fromMap(Map<String, dynamic> map)
+      : id = map[PlayerTableFields.id],
+        roninId = map[PlayerTableFields.roninId],
+        name = map[PlayerTableFields.name],
+        percentage = map[PlayerTableFields.percentage],
+        userId = map[PlayerTableFields.userId];
+
+  void update() async {
+    slp = await AxieApiHelper.fetchSlpStats(roninId);
   }
 }

@@ -43,28 +43,30 @@ class PlayerCard extends StatelessWidget {
                       // width: 200,
                       flex: 2,
                       child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        mainAxisSize: MainAxisSize.min,
                         children: [
                           Container(
                             padding: const EdgeInsets.all(5),
                             child: Text(
-                              "Scholar: ${player.slp.total * player.percentage}",
-                              style: Theme.of(context).textTheme.headline6,
+                              "Scholar (${NumberFormat("##.##", "en_US").format(player.percentage * 100)}%): ${NumberFormat("##,###.##", "en_US").format(player.slp.claimableTotal * player.percentage)}",
+                              style: Theme.of(context).textTheme.subtitle1,
                               textAlign: TextAlign.start,
                             ),
                           ),
                           Container(
                             padding: const EdgeInsets.all(5),
                             child: Text(
-                              "Manager: ${player.slp.total * (1 - player.percentage)}",
-                              style: Theme.of(context).textTheme.headline6,
+                              "Manager (${NumberFormat("##.##", "en_US").format((1 - player.percentage) * 100)}%): ${NumberFormat("##,###.##", "en_US").format(player.slp.claimableTotal * (1 - player.percentage))}",
+                              style: Theme.of(context).textTheme.subtitle1,
                               textAlign: TextAlign.start,
                             ),
                           ),
                           Container(
                             padding: const EdgeInsets.all(5),
                             child: Text(
-                              "Total Slp: ${player.slp.total}",
-                              style: Theme.of(context).textTheme.headline6,
+                              "Total Slp: ${NumberFormat("##,###.##", "en_US").format(player.slp.claimableTotal)}",
+                              style: Theme.of(context).textTheme.subtitle1,
                               textAlign: TextAlign.start,
                             ),
                           )
@@ -74,11 +76,17 @@ class PlayerCard extends StatelessWidget {
                     Expanded(
                       // width: 200,
                       child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        mainAxisSize: MainAxisSize.min,
                         children: [
-                          const Text("Average"),
                           Text(
-                            player.slp.average.toString(),
+                            "Average",
+                            style: Theme.of(context).textTheme.headline6,
+                          ),
+                          Text(
+                            NumberFormat("##,###.##", "en_US")
+                                .format(player.slp.average)
+                                .toString(),
                             style: Theme.of(context).textTheme.headline6,
                             textAlign: TextAlign.start,
                           ),
@@ -97,7 +105,7 @@ class PlayerCard extends StatelessWidget {
                       : "Last Claimed At: " +
                           DateFormat('MMMM d y - kk:mm').format(lastClaimedAt),
                   textAlign: TextAlign.start,
-                  style: Theme.of(context).textTheme.subtitle1,
+                  style: Theme.of(context).textTheme.subtitle2,
                 ),
               ),
             ],

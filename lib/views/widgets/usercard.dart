@@ -1,5 +1,6 @@
 import 'package:axie_monitoring/constants.dart';
-import 'package:axie_monitoring/providers/playersprovider.dart';
+import 'package:axie_monitoring/providers/marketvalprovider.dart';
+import 'package:axie_monitoring/providers/userprovider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:intl/intl.dart';
@@ -9,14 +10,15 @@ class UserCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final oCcy = NumberFormat("#,##0.00", "en_US");
-    return Consumer<PlayersProvider>(
-      builder: (context, provider, child) => Card(
-        color: Colors.indigo.shade200,
-        child: SizedBox(
-          width: CardSize.width,
-          height: CardSize.height,
-          child: Column(
+    final oCcy = NumberFormat("#,###.##", "en_US");
+    return Card(
+      color: Colors.indigo.shade200,
+      child: SizedBox(
+        width: CardSize.width,
+        height: CardSize.height,
+        child: Consumer2<PlayersProvider, MarketValProvider>(
+          builder: (context, playersProvider, marketValProvider, child) =>
+              Column(
             children: [
               Expanded(
                 child: Container(
@@ -34,7 +36,7 @@ class UserCard extends StatelessWidget {
                   alignment: Alignment.centerLeft,
                   // color: Colors.red,
                   child: Text(
-                    "SLP: ${oCcy.format(provider.totalSlp)}",
+                    "SLP: ${oCcy.format(playersProvider.totalSlp)}",
                     style: Theme.of(context).textTheme.headline5,
                   ),
                 ),
@@ -44,8 +46,21 @@ class UserCard extends StatelessWidget {
                   padding: const EdgeInsets.symmetric(horizontal: 40),
                   alignment: Alignment.centerLeft,
                   // color: Colors.red,
-                  child: Text(
-                    "PHP ${oCcy.format(provider.totalSlp * 1.3)}",
+                  child: SizedBox(
+                    child: Row(
+                      children: [
+                        Expanded(
+                          child: Text(
+                            "PHP ${oCcy.format(playersProvider.totalSlp * marketValProvider.slpMarketVal)}",
+                          ),
+                        ),
+                        Expanded(
+                          child: Text(
+                            "SLP MARKET VALUE: ${marketValProvider.slpMarketVal}",
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),
