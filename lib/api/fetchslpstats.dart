@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:axie_monitoring/models/slp.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
@@ -21,11 +22,11 @@ class AxieApiHelper {
     );
 
     if (_response.statusCode == 200) {
-      
+      log(_response.body);
       Map<String, dynamic> _json = jsonDecode(_response.body);
       return Future(() => SlpStats.fromJson(_json['slp']));
     } else {
-      throw Exception('Failed to fetch SLP stats');
+      throw Exception('Server Error.');
     }
   }
 }

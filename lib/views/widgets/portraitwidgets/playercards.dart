@@ -1,4 +1,4 @@
-import 'package:axie_monitoring/providers/userprovider.dart';
+import 'package:axie_monitoring/providers/driftuserprovider.dart';
 import 'package:axie_monitoring/views/widgets/portraitwidgets/playercard.dart';
 
 import 'package:flutter/material.dart';

@@ -14,9 +14,12 @@ class Player {
     required this.roninId,
     required this.name,
     required this.percentage,
-  });
+  }) {
+    update();
+  }
 
   Map<String, dynamic> toMap() => {
+        PlayerTableFields.userId: userId,
         PlayerTableFields.roninId: roninId,
         PlayerTableFields.name: name,
         PlayerTableFields.percentage: percentage,
@@ -25,11 +28,13 @@ class Player {
   Player.fromMap(Map<String, dynamic> map)
       : id = map[PlayerTableFields.id],
         roninId = map[PlayerTableFields.roninId],
-        name = map[PlayerTableFields.name],
+        name = map[PlayerTableFields.name] ?? "No Name",
         percentage = map[PlayerTableFields.percentage],
         userId = map[PlayerTableFields.userId];
 
-  void update() async {
-    slp = await AxieApiHelper.fetchSlpStats(roninId);
+  void update() {
+    AxieApiHelper.fetchSlpStats(roninId).then((value) {
+      slp = value;
+    });
   }
 }

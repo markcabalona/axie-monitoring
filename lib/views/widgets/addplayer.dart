@@ -1,6 +1,6 @@
 import 'dart:developer';
 import 'package:axie_monitoring/models/player.dart' as models;
-import 'package:axie_monitoring/providers/userprovider.dart';
+import 'package:axie_monitoring/providers/driftuserprovider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -18,7 +18,6 @@ class AddPlayer extends StatelessWidget {
       child: Card(
         child: Form(
           key: _formKey,
-          
           child: SingleChildScrollView(
             child: Column(
               children: <Widget>[
@@ -35,25 +34,34 @@ class AddPlayer extends StatelessWidget {
                 TextFormField(
                   //ronin address
                   controller: _roninAddressCtrl,
-                  validator: (val) => _validateRoninAddress(val),
+                  validator: (val) => _validateRoninAddress(
+                    val,
+                    Provider.of<PlayersProvider>(context,listen: false).players,
+                  ),
                 ),
                 ElevatedButton(
                   onPressed: () {
                     if (_formKey.currentState!.validate()) {
-                      Provider.of<PlayersProvider>(context, listen: false)
-                          .addPlayer(
-                        models.Player(
-                          name: _nameCtrl.text,
-                          percentage: double.parse(_percentageCtrl.text)/100,
-                          roninId: _roninAddressCtrl.text.replaceFirst('ronin:', '0x'),
-                        ),
-                      );
-                      Navigator.of(context).pop();
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
-                          content: Text("Scholar ${_nameCtrl.text} added."),
-                        ),
-                      );
+                      try {
+                        Provider.of<PlayersProvider>(context, listen: false)
+                            .addPlayer(
+                          models.Player(
+                            name: _nameCtrl.text,
+                            percentage:
+                                double.parse(_percentageCtrl.text) / 100,
+                            roninId: _roninAddressCtrl.text
+                                .replaceFirst('ronin:', '0x'),
+                          ),
+                        );
+                        Navigator.of(context).pop();
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text("Scholar ${_nameCtrl.text} added."),
+                          ),
+                        );
+                      } catch (e) {
+                        log(e.toString());
+                      }
                     }
                   },
                   child: const Text("Add Scholar"),
@@ -69,8 +77,7 @@ class AddPlayer extends StatelessWidget {
   String? _validateName(String? val) {
     if (val!.isEmpty) {
       return "This field cannot be empty.";
-    }
-    else if(val.length > 32){
+    } else if (val.length > 32) {
       return "Too long.";
     }
     return null;
@@ -92,10 +99,15 @@ class AddPlayer extends StatelessWidget {
     return "This field cannot be empty.";
   }
 
-  String? _validateRoninAddress(String? val) {
+  String? _validateRoninAddress(String? val, List<models.Player> players) {
     if (val!.isNotEmpty) {
       if (!(val.contains('ronin:'))) {
         return "Invalid Ronin Address.";
+      } else if (players
+          .map((player) => player.roninId)
+          .toList()
+          .contains(val.replaceFirst('ronin:', '0x'))) {
+        return "Player is already in the list.";
       } else {
         return null;
       }

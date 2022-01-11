@@ -1,7 +1,6 @@
-import 'package:axie_monitoring/providers/userprovider.dart';
+import 'package:axie_monitoring/providers/driftuserprovider.dart';
 import 'package:axie_monitoring/views/widgets/addplayer.dart';
 import 'package:axie_monitoring/views/widgets/landscapewidgets/playertable.dart';
-
 
 import 'package:axie_monitoring/views/widgets/portraitwidgets/playercards.dart';
 import 'package:axie_monitoring/views/widgets/usercard.dart';
@@ -99,9 +98,16 @@ class MainScreenState extends State<MainScreen> {
               width: MediaQuery.of(context).size.width,
               padding: const EdgeInsets.only(bottom: 20),
               alignment: Alignment.topCenter,
-              child: MediaQuery.of(context).orientation == Orientation.landscape
-                  ? const PlayerTable()
-                  : const PlayerCards(),
+              child: Consumer<PlayersProvider>(
+                builder: (context, provider, child) => provider.isLoading
+                    ? const Center(
+                        child: CircularProgressIndicator(),
+                      )
+                    : MediaQuery.of(context).orientation ==
+                            Orientation.landscape
+                        ? const PlayerTable()
+                        : const PlayerCards(),
+              ),
             ),
           ],
         ),

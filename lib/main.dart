@@ -1,8 +1,8 @@
 import 'dart:developer';
 
-import 'package:axie_monitoring/database/dbhelper.dart';
+import 'package:axie_monitoring/database/driftdbhelper.dart';
 import 'package:axie_monitoring/providers/marketvalprovider.dart';
-import 'package:axie_monitoring/providers/userprovider.dart';
+import 'package:axie_monitoring/providers/driftuserprovider.dart';
 import 'package:axie_monitoring/views/screens/mainscreen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -11,8 +11,9 @@ import 'package:flutter_dotenv/flutter_dotenv.dart' as dotenv;
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   log("called in main");
-  await DatabaseHelper.instance.deleteDb();
-  await DatabaseHelper.instance.initDb();
+  DriftDbHelper.db;
+  // await DatabaseHelper.instance.deleteDb();
+  // await DatabaseHelper.instance.initDb();
   log("finished");
   await dotenv.load(fileName: '.env');
   runApp(const MyApp());
