@@ -95,6 +95,7 @@ class PlayersProvider extends ChangeNotifier {
 
   Future<void> addPlayer(Player newPlayer) async {
     if (_user!.players.map((player) => player.roninId).toList().contains(newPlayer.roninId)) {
+      newPlayer.slp = await AxieApiHelper.fetchSlpStats(newPlayer.roninId);
       throw ("Player is already in the list.");
     }
     try {

@@ -1,8 +1,8 @@
-
-
 import 'package:axie_monitoring/database/driftdb.dart';
+import 'package:drift/backends.dart';
+export 'shared.dart';
 
-class DriftDbHelper{
+class DriftDbHelper {
   DriftDbHelper._();
 
   static DriftDbHelper? _instance;
@@ -12,14 +12,17 @@ class DriftDbHelper{
     return _instance!;
   }
 
-  static AxieDatabase db = AxieDatabase();
+  static AxieDatabase db = AxieDatabase(Platform.createDatabaseConnection());
 
-  close(){
+  close() {
     db.close();
   }
 
   final PlayerDao playerDao = PlayerDao(db);
   final UserDao userDao = UserDao(db);
+}
 
-
+class Platform {
+  static QueryExecutor createDatabaseConnection() =>
+      PlatformInterface.openConnection();
 }
